@@ -1,11 +1,12 @@
 import React from 'react'
 
-function Dashboard() {
+function App() {
   return (
     <div>
+      <h1>Resume</h1>
       
     </div>
   )
 }
 
-export default Dashboard
+export default App
