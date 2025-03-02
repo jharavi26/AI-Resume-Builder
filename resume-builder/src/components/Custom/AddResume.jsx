@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
+import {v4 as uuidv4 } from 'uuid';
 import {PlusSquare} from 'lucide-react'
 import {X} from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom';
 
 function AddResume() {
 
   const [openDialog , setOpenDialog] = useState(false);
+  const [resumeTitle , setResumeTitle] = useState("")
+  const navigation = useNavigate();
+
+  const onCreate = ()=>{
+    const uuid = uuidv4();
+    console.log(resumeTitle , uuid);
+    navigation(`/dashboard/resume/${uuid}/edit`)
+  }
+
   return (
     <div>
       <div className='p-14 py-24 border items-center flex justify-center 
@@ -29,18 +40,20 @@ function AddResume() {
               Add a Title for for yout New Project
             </p>
 
-            <input placeholder='Ex.Full Stack Resume' className="border border-gray-400 rounded-lg p-2 mt-1 my-2 w-full focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-blue-500" />
+            <input placeholder='Ex.Full Stack Resume'  value = {resumeTitle} className="border border-gray-400 rounded-lg p-2 mt-1 my-2 w-full focus:outline-none focus:ring-2 focus:ring-black-500 focus:border-blue-500" onChange={(e)=>setResumeTitle(e.target.value)} 
+           />
 
             <div className="mt-4 flex justify-end">
-              <button 
+             
+              <button  disabled ={!resumeTitle}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition mr-2 "
-              >
+               onClick={()=>onCreate()}>
                 Create
-              </button>
-              <button 
+                </button>
+            
+              <button
                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-                onClick={() => setOpenDialog(false)}
-              >
+                onClick={() => setOpenDialog(false)}>
                 Close
               </button>
             </div>
