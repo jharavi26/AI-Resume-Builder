@@ -1,6 +1,6 @@
 import React from 'react'
 
-function EducationPreview() {
+function EducationPreview({resumeInfo}) {
   return (
     <div className='my-6'>
       <h2 className='text-center font-bold text-sm mb-2'
@@ -22,7 +22,7 @@ function EducationPreview() {
             <h2 className='text-xs flex justify-between'>{education?.degree} in {education?.major}
             <span>{education?.startDate} - {education?.endDate}</span>
             </h2>
-            <p className='text-xs my-2'>
+            <p className='text-xs my-2 font-bold'>
                 {education?.description}
             </p>
         </div>

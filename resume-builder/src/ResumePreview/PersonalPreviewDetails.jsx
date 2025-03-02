@@ -2,7 +2,7 @@ import React from 'react'
 
 function PersonalPreviewDetails({resumeInfo}) {
   return (
-    <div className='shadow-lg h-full p-10 border-t-[10px]'>
+    <div className='shadow-lg h-auto p-4 border-t-[2px]'>
       <h2 className='font-bold text-xl text-center'>{resumeInfo?.firstName} {resumeInfo?.lastName}</h2>
       <h2 className='text-center text-sm font-medium'
        >{resumeInfo?.jobTitle}</h2>

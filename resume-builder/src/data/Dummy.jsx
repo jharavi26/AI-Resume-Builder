@@ -4,7 +4,7 @@ export default{
   jobTitle:'Full Stack Developer',
   address:'Mumbai India',
   phone:'7900345627',
-  email:'anuj05@gmail.com',
+  email:'anujf05@gmail.com',
   themeColor:"#ff6666",
   summery:'Results-driven Full Stack Developer with expertise in React.js, JavaScript, TypeScript, Node.js, Express.js, and MongoDB. Passionate about building scalable, high-performance web applications with clean and maintainable code. Strong problem-solving skills with hands-on experience in frontend UI development, backend API creation, and database management.',
   experience:[
@@ -45,20 +45,20 @@ export default{
       {
           id:1,
           universityName:'Western Illinois University',
-          startDate:'Aug 2018',
-          endDate:'Dec:2019',
+          startDate:'Aug 2019',
+          endDate:'Dec:2022',
           degree:'Master',
           major:'Computer Science',
-          description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
+          description:'A Master’s in Computer Science (M.Sc. CS or M.Tech CS) is a postgraduate program that provides advanced knowledge in computing, software engineering, algorithms, artificial intelligence, and emerging technologies. It focuses on research, problem-solving, and specialized areas such as Machine Learning, Data Science, Cybersecurity, and Cloud Computing. Graduates gain expertise in complex system design, data management, and advanced programming, making them highly suitable for roles like Software Architect, AI Engineer, Data Scientist, and Researcher. The degree also serves as a pathway to Ph.D. programs or leadership roles in tech companies.'
       },
       {
           id:2,
           universityName:'Western Illinois University',
           startDate:'Aug 2018',
           endDate:'Dec:2019',
-          degree:'Master',
+          degree:'Bachelor',
           major:'Computer Science',
-          description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
+          description:'A Bachelor’s in Computer Science is an undergraduate program that provides a strong foundation in programming, software development, algorithms, databases, networking, and emerging technologies. It equips students with problem-solving skills and technical expertise required for careers in software development, data analysis, cybersecurity, and more. Graduates can pursue roles such as Software Engineer, Web Developer, Data Analyst, or Cloud Engineer in the tech industry. The degree also serves as a pathway for advanced studies and certifications in specialized fields like AI, Machine Learning, and Cybersecurity.'
       }
   ],
   skills:[
@@ -74,13 +74,18 @@ export default{
       },
       {
           id:1,
-          name:'MySql',
+          name:'JavaScript',
           rating:80,
       },
       {
           id:1,
           name:'React Native',
           rating:100,
-      }
+      },
+      {
+        id:1,
+        name:'Node',
+        rating:100,
+    }
   ]
 }

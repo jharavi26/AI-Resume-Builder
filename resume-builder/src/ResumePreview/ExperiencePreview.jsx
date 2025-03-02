@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ExperiencePreview() {
+function ExperiencePreview({resumeInfo}) {
   return (
     <div className='my-6'>
        <h2 className='text-center font-bold text-sm mb-2'
@@ -12,7 +12,7 @@ function ExperiencePreview() {
             borderColor:resumeInfo?.themeColor
         }} />
 
-        {resumeInfo?.Experience?.map((experience,index)=>(
+        {resumeInfo?.experience?.map((experience,index)=>(
             <div key={index} className='my-5'>
                 <h2 className='text-sm font-bold'
                  style={{
@@ -26,7 +26,7 @@ function ExperiencePreview() {
                 {/* <p className='text-xs my-2'>
                     {experience.workSummery}
                 </p> */}
-                <div className='text-xs my-2' dangerouslySetInnerHTML={{__html:experience?.workSummery}} />
+                <div className='text-xs my-2 font-bold' dangerouslySetInnerHTML={{__html:experience?.workSummery}} />
             </div>
         ))}
       
