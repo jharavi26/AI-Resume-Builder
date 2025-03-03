@@ -1,6 +1,7 @@
 import React, { useContext, useState , useEffect } from 'react'
 import { ResumeInfoContext } from '../../context/ResumeInfoContext'
 import { Brain } from 'lucide-react'
+import { AIChatSession } from '../../service/AiModel'
 
 const prompt="Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format"
 
@@ -32,15 +33,31 @@ function Summary({enableNext}) {
     return () => clearTimeout(timer);
   }, [showToast]);
 
-
-const GenerateSummeryFromAI=async()=>{
-  const PROMPT=prompt.replace('{jobTitle}',resumeInfo?.jobTitle);
-  console.log(PROMPT);
-  const result=await AIChatSession.sendMessage(PROMPT);
-  console.log(JSON.parse(result.response.text()))
- 
-  setAiGeneratedSummeryList(JSON.parse(result.response.text()))
-}
+  const GenerateSummeryFromAI = async () => {
+    const PROMPT = prompt.replace('{jobTitle}', resumeInfo?.jobTitle);
+    console.log("Final Prompt:", PROMPT);
+  
+    try {
+      const result = await AIChatSession.sendMessage(PROMPT);
+      
+      // Ensure response is awaited
+      let responseText = await result.response.text(); // Change const → let
+      console.log("Raw AI Response:", responseText);
+  
+      // Remove Markdown formatting
+      responseText = responseText.replace(/```json|```/g, "").trim();
+  
+      // Attempt to parse as JSON
+      const jsonResponse = JSON.parse(responseText);
+      console.log("Parsed JSON:", jsonResponse);
+  
+      setAiGeneratedSummeryList(jsonResponse);
+    } catch (error) {
+      console.error("Error in AI response processing:", error);
+    }
+  };
+  
+   
 
 const onSave = (e)=>{
   e.preventDefault();
@@ -84,7 +101,7 @@ const onSave = (e)=>{
         </div>
 
         
-       {aiGeneratedSummeryList&& <div className='my-5'>
+       {/* {aiGeneratedSummeryList&& <div className='my-5'>
             <h2 className='font-bold text-lg'>Suggestions</h2>
             {aiGeneratedSummeryList?.map((item,index)=>(
                 <div key={index} 
@@ -94,7 +111,7 @@ const onSave = (e)=>{
                     <p>{item?.summary}</p>
                 </div>
             ))}
-        </div>}
+        </div>} */}
       
     </div>
   )
