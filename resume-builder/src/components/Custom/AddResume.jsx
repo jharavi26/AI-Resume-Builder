@@ -13,7 +13,7 @@ function AddResume() {
   const onCreate = ()=>{
     const uuid = uuidv4();
     console.log(resumeTitle , uuid);
-    navigation(`/dashboard/resume/${uuid}/edit`)
+    navigation(`/dashboard/${uuid}/edit`)
   }
 
   return (

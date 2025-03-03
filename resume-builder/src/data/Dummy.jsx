@@ -6,7 +6,7 @@ export default{
   phone:'7900345627',
   email:'anujf05@gmail.com',
   themeColor:"#ff6666",
-  summery:'Results-driven Full Stack Developer with expertise in React.js, JavaScript, TypeScript, Node.js, Express.js, and MongoDB. Passionate about building scalable, high-performance web applications with clean and maintainable code. Strong problem-solving skills with hands-on experience in frontend UI development, backend API creation, and database management.',
+  summery:'Results-driven Full Stack Developer with expertise in React.js, JavaScript, TypeScript, Node.js, Express.js, and MongoDB. Passionate about building scalable, high-performance web applications with clean and maintainable code.',
   experience:[
       {
           id:1,
