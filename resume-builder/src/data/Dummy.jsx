@@ -86,6 +86,16 @@ export default{
         id:1,
         name:'Node',
         rating:100,
+    },
+    {
+        id:1,
+        name:'TypeScript',
+        rating:100,
+    },
+    {
+        id:1,
+        name:'API-Handling',
+        rating:100,
     }
   ]
 }
