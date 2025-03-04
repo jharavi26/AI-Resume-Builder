@@ -101,7 +101,7 @@ const onSave = (e)=>{
         </div>
 
         
-       {/* {aiGeneratedSummeryList&& <div className='my-5'>
+       {aiGeneratedSummeryList&& <div className='my-5'>
             <h2 className='font-bold text-lg'>Suggestions</h2>
             {aiGeneratedSummeryList?.map((item,index)=>(
                 <div key={index} 
@@ -111,7 +111,7 @@ const onSave = (e)=>{
                     <p>{item?.summary}</p>
                 </div>
             ))}
-        </div>} */}
+        </div>}
       
     </div>
   )
