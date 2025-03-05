@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ResumeInfoContext } from '../../context/ResumeInfoContext';
+import React, { useContext, useEffect, useState } from "react";
+import { ResumeInfoContext } from "../../context/ResumeInfoContext";
+import { Brain } from "lucide-react";
+import { AIChatSession } from "../../service/AiModel";
 
 const Toast = () => {
   return (
@@ -9,57 +11,105 @@ const Toast = () => {
   );
 };
 
+const PROMPT = 
+  "Position title: {positionTitle}. Based on this title, generate 5-7 bullet points describing relevant work experience for a resume. " +
+  "Do not include experience level. Provide the response in plain text without any HTML or special formatting.";
+
+
 function Experience() {
   const [experienceList, setExperienceList] = useState([]);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [showToast, setShowToast] = useState(false);
-  const [description , setDescription] = useState()
 
   // ✅ Ensure experienceList updates when resumeInfo.experience changes
   useEffect(() => {
-    resumeInfo?.experience?.length > 0 && setExperienceList(resumeInfo.experience);
-    
-  }, []);
+    resumeInfo?.experience?.length > 0 &&
+      setExperienceList(resumeInfo.experience);
+  }, [resumeInfo?.experience]);
 
   // ✅ Sync experienceList with resumeInfo on update
- 
 
- const handleChange=(index,event)=>{
-    const newEntries=experienceList.slice();
-    const {name,value}=event.target;
-    newEntries[index][name]=value;
-    console.log(newEntries)
+  const handleChange = (index, event) => {
+    const newEntries = experienceList.slice();
+    const { name, value } = event.target;
+    newEntries[index][name] = value;
+    console.log(newEntries);
     setExperienceList(newEntries);
-}
+  };
 
- const AddNewExperience=()=>{
-    
-    setExperienceList([...experienceList,{
-        title:'',
-        companyName:'',
-        city:'',
-        state:'',
-        startDate:'',
-        endDate:'',
-        workSummery:'',
-    }])
-}
+  const AddNewExperience = () => {
+    setExperienceList([
+      ...experienceList,
+      {
+        title: "",
+        companyName: "",
+        city: "",
+        state: "",
+        startDate: "",
+        endDate: "",
+        workSummery: "",
+      },
+    ]);
+  };
 
-const RemoveExperience=()=>{
-    setExperienceList(experinceList=>experinceList.slice(0,-1))
-}
+  const RemoveExperience = () => {
+    setExperienceList((experinceList) => experinceList.slice(0, -1));
+  };
 
-useEffect(()=>{
-    setResumeInfo({
-        ...resumeInfo , 
-        experience : experienceList
+  const handleWorkSummeryChange = (index, event) => {
+    const { value } = event.target;
+
+    setExperienceList((prevExperience) => {
+      const updatedExperience = [...prevExperience];
+      updatedExperience[index] = {
+        ...updatedExperience[index],
+        workSummery: value, // Update only workSummery
+      };
+      return updatedExperience;
     });
- } , [experienceList])
+  };
+
+  useEffect(() => {
+    setResumeInfo({
+      ...resumeInfo,
+      experience: experienceList,
+    });
+  }, [experienceList]);
 
   const onSave = () => {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
+
+  const GenerateSummeryFromAI = async (index) => {
+    if (!resumeInfo?.experience?.[index]?.title) {
+      return;
+    }
+  
+    const prompt = PROMPT.replace("{positionTitle}", resumeInfo.experience[index].title);
+  
+    try {
+      const result = await AIChatSession.sendMessage(prompt);
+      let resp = await result.response.text(); // Get AI response
+  
+      // ✅ Remove HTML tags using regex
+      const plainText = resp.replace(/<[^>]*>/g, "").trim(); 
+  
+      // ✅ Update the workSummery for the corresponding index
+      setExperienceList((prevExperience) => {
+        const updatedExperience = [...prevExperience];
+        updatedExperience[index] = {
+          ...updatedExperience[index],
+          workSummery: plainText, // Store cleaned text
+        };
+        return updatedExperience;
+      });
+    } catch (error) {
+      console.error("Error generating summary:", error);
+    }
+  };
+  
+  
 
   return (
     <div>
@@ -74,7 +124,7 @@ useEffect(()=>{
                   <label className="text-xs">Position Title</label>
                   <input
                     name="title"
-                    value={item?.title || ''}
+                    value={item?.title || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
@@ -82,7 +132,7 @@ useEffect(()=>{
                   <label className="text-xs">Company Name</label>
                   <input
                     name="companyName"
-                    value={item?.companyName || ''}
+                    value={item?.companyName || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
@@ -90,7 +140,7 @@ useEffect(()=>{
                   <label className="text-xs">City</label>
                   <input
                     name="city"
-                    value={item?.city || ''}
+                    value={item?.city || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
@@ -98,7 +148,7 @@ useEffect(()=>{
                   <label className="text-xs">State</label>
                   <input
                     name="state"
-                    value={item?.state || ''}
+                    value={item?.state || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
@@ -107,7 +157,7 @@ useEffect(()=>{
                   <input
                     type="date"
                     name="startDate"
-                    value={item?.startDate || ''}
+                    value={item?.startDate || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
@@ -116,20 +166,26 @@ useEffect(()=>{
                   <input
                     type="date"
                     name="endDate"
-                    value={item?.endDate || ''}
+                    value={item?.endDate || ""}
                     onChange={(event) => handleChange(index, event)}
                   />
                 </div>
-                <textarea
-                  className="w-full mt-5 resize-none overflow-hidden min-h-[50px] p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                 required
-                 value={item.workSummery}
-              onChange={(e) => {
-              setDescription(e.target.value);
-              e.target.style.height = "auto"; // Reset height first
-              e.target.style.height = `${e.target.scrollHeight}px`; // Adjust to content
-            }}
-          />
+
+                <div className="col-span-2 ">
+                  <label className="text-xs">Work Summary</label>
+                  <button
+                    onClick={() => GenerateSummeryFromAI(index)}
+                    className="bg-blue-600 text-primary flex gap-2 size=sm float-end"
+                  >
+                    <Brain className="h-4 w-4" /> Generate from AI
+                  </button>
+                  <textarea
+                    className="w-full mt-2 p-2 border rounded resize-none min-h-[80px] focus:ring-2 focus:ring-blue-500"
+                    name="workSummery"
+                    value={item.workSummery || ""}
+                    onChange={(event) => handleWorkSummeryChange(index, event)}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -143,7 +199,9 @@ useEffect(()=>{
               - Remove
             </button>
           </div>
-          <button className='bg-green-500' onClick={onSave}>Save</button>
+          <button className="bg-green-500" onClick={onSave}>
+            Save
+          </button>
         </div>
       </div>
       {showToast && <Toast />}
@@ -152,7 +210,3 @@ useEffect(()=>{
 }
 
 export default Experience;
-
-
-
-
