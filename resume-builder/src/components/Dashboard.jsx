@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AddResume from './Custom/AddResume'
+
 
 function Dashboard() {
   return (
@@ -8,6 +9,8 @@ function Dashboard() {
       <p>Start Creating AI resume to your next Job Role</p>
       <div className='grid grid-cols-2 md:grid-colos-3 lg:grid-cols-5'>
         <AddResume/>
+
+        
 
       </div>
       

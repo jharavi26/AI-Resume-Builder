@@ -57,17 +57,18 @@ function Experience() {
   };
 
   const handleWorkSummeryChange = (index, event) => {
-    const { value } = event.target;
-
-    setExperienceList((prevExperience) => {
-      const updatedExperience = [...prevExperience];
-      updatedExperience[index] = {
-        ...updatedExperience[index],
-        workSummery: value, // Update only workSummery
-      };
-      return updatedExperience;
-    });
+    const newText = event.target.value;
+    const formattedText = newText
+      .split("\n") // Split text into lines
+      .map((line) => (line.trim() ? `• ${line.trim()}` : "")) // Add bullet points
+      .join("\n"); // Join back with new lines
+  
+    // Update state
+    const updatedItems = [...resumeInfo.experience];
+    updatedItems[index].workSummery = formattedText;
+    setResumeInfo({ ...resumeInfo, experience: updatedItems });
   };
+  
 
   useEffect(() => {
     setResumeInfo({
@@ -182,7 +183,7 @@ function Experience() {
                   <textarea
                     className="w-full mt-2 p-2 border rounded resize-none min-h-[80px] focus:ring-2 focus:ring-blue-500"
                     name="workSummery"
-                    value={item.workSummery || ""}
+                    value={item.workSummery ? `• ${item.workSummery.replace(/\n/g, "\n• ")}` : ""}
                     onChange={(event) => handleWorkSummeryChange(index, event)}
                   />
                 </div>

@@ -44,8 +44,8 @@ export default {
     {
       id: 1,
       universityName: "Western Illinois University",
-      startDate: "Aug 2019",
-      endDate: "Dec:2022",
+      startDate: "2019-06-20",
+      endDate: "2022-04-13",
       degree: "Master",
       major: "Computer Science",
       description:
@@ -54,8 +54,8 @@ export default {
     {
       id: 2,
       universityName: "Western Illinois University",
-      startDate: "Aug 2018",
-      endDate: "Dec:2019",
+      startDate: "2017-05-20",
+      endDate: "2020-04-12",
       degree: "Bachelor",
       major: "Computer Science",
       description:
@@ -66,37 +66,37 @@ export default {
     {
       id: 1,
       name: "Angular",
-      rating: 80,
+      rating: 3,
     },
     {
       id: 1,
       name: "React",
-      rating: 100,
+      rating: 4,
     },
     {
       id: 1,
       name: "JavaScript",
-      rating: 80,
+      rating: 4,
     },
     {
       id: 1,
       name: "React Native",
-      rating: 100,
+      rating: 3,
     },
     {
       id: 1,
       name: "Node",
-      rating: 100,
+      rating: 5,
     },
     {
       id: 1,
       name: "TypeScript",
-      rating: 100,
+      rating: 3,
     },
     {
       id: 1,
       name: "API-Handling",
-      rating: 100,
+      rating: 4,
     },
   ],
 };
