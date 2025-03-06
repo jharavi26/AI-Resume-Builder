@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+
+@media print {
+  /* Hide elements that should not be printed */
+  #no-print, header, footer {
+    display: none !important;
+  }
+
+  /* Ensure the resume content is visible */
+  #print-area {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Hide everything except #print-area */
+  body * {
+    visibility: hidden;
+    margin: 3px;
+    padding: 0px;
+    box-shadow: none;
+  }
+  #print-area, #print-area * {
+    visibility: visible;
+  }
+}
+
+
+@page{
+  size : auto;
+  margin: 0mm;
+}
