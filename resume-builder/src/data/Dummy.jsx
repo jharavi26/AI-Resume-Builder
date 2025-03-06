@@ -19,10 +19,10 @@ export default {
       endDate: "2022-12-24",
       currentlyWorking: true,
       workSummery: `
-• Designed, developed, and maintained full-stack applications using React and Node.js.
-• Implemented responsive user interfaces with React, ensuring seamless user experiences across various devices and browsers.
-• Maintained the React Native in-house organization application.
-• Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end and back-end systems.`,
+  Designed, developed, and maintained full-stack applications using React and Node.js.
+  Implemented responsive user interfaces with React, ensuring seamless user experiences across various devices and browsers.
+  Maintained the React Native in-house organization application.
+  Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end and back-end systems.`,
     },
     {
       id: 2,
@@ -34,10 +34,10 @@ export default {
       endDate: "2025-02-21",
       currentlyWorking: false,
       workSummery: `
-      • Designed, developed, and maintained full-stack applications using React and Node.js.
-      • Implemented responsive user interfaces with React, ensuring seamless user experiences across various devices and browsers.
-      • Maintained the React Native in-house organization application.
-      • Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end and back-end systems.`,
+      Designed, developed, and maintained full-stack applications using React and Node.js.
+      Implemented responsive user interfaces with React, ensuring seamless user experiences across various devices and browsers.
+      Maintained the React Native in-house organization application.
+      Created RESTful APIs with Node.js and Express, facilitating data communication between the front-end and back-end systems.`,
     },
   ],
   education: [

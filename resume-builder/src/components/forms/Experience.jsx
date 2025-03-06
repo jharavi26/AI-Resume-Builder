@@ -11,10 +11,9 @@ const Toast = () => {
   );
 };
 
-const PROMPT = 
+const PROMPT =
   "Position title: {positionTitle}. Based on this title, generate 5-7 bullet points describing relevant work experience for a resume. " +
   "Do not include experience level. Provide the response in plain text without any HTML or special formatting.";
-
 
 function Experience() {
   const [experienceList, setExperienceList] = useState([]);
@@ -57,16 +56,27 @@ function Experience() {
   };
 
   const handleWorkSummeryChange = (index, event) => {
-    const newText = event.target.value;
-    const formattedText = newText
-      .split("\n") // Split text into lines
-      .map((line) => (line.trim() ? `• ${line.trim()}` : "")) // Add bullet points
-      .join("\n"); // Join back with new lines
+    let newText = event.target.value;
   
-    // Update state
-    const updatedItems = [...resumeInfo.experience];
-    updatedItems[index].workSummery = formattedText;
-    setResumeInfo({ ...resumeInfo, experience: updatedItems });
+    // Remove extra bullets first, then add them properly
+    const formattedText = newText
+      .split("\n")
+      .map((line) => {
+        let trimmedLine = line.trim();
+        if (!trimmedLine) return ""; // Keep empty lines
+        return trimmedLine.startsWith("•") ? trimmedLine : `• ${trimmedLine}`;
+      })
+      .join("\n");
+  
+    // Update the experienceList correctly
+    setExperienceList((prevExperience) => {
+      const updatedExperience = [...prevExperience];
+      updatedExperience[index] = {
+        ...updatedExperience[index],
+        workSummery: formattedText,
+      };
+      return updatedExperience;
+    });
   };
   
 
@@ -86,16 +96,19 @@ function Experience() {
     if (!resumeInfo?.experience?.[index]?.title) {
       return;
     }
-  
-    const prompt = PROMPT.replace("{positionTitle}", resumeInfo.experience[index].title);
-  
+
+    const prompt = PROMPT.replace(
+      "{positionTitle}",
+      resumeInfo.experience[index].title
+    );
+
     try {
       const result = await AIChatSession.sendMessage(prompt);
       let resp = await result.response.text(); // Get AI response
-  
+
       // ✅ Remove HTML tags using regex
-      const plainText = resp.replace(/<[^>]*>/g, "").trim(); 
-  
+      const plainText = resp.replace(/<[^>]*>/g, "").trim();
+
       // ✅ Update the workSummery for the corresponding index
       setExperienceList((prevExperience) => {
         const updatedExperience = [...prevExperience];
@@ -109,8 +122,6 @@ function Experience() {
       console.error("Error generating summary:", error);
     }
   };
-  
-  
 
   return (
     <div>
@@ -183,7 +194,7 @@ function Experience() {
                   <textarea
                     className="w-full mt-2 p-2 border rounded resize-none min-h-[80px] focus:ring-2 focus:ring-blue-500"
                     name="workSummery"
-                    value={item.workSummery ? `• ${item.workSummery.replace(/\n/g, "\n• ")}` : ""}
+                    value={item.workSummery || ""} // Keep as is, since bullets are added in handleWorkSummeryChange
                     onChange={(event) => handleWorkSummeryChange(index, event)}
                   />
                 </div>
