@@ -11,28 +11,25 @@ function ExperiencePreview({ resumeInfo }) {
       </h2>
       <hr style={{ borderColor: resumeInfo?.themeColor }} />
 
-      {resumeInfo?.experience?.map((experience, index) => (
+      {resumeInfo?.experience?.map((exp, index) => (
         <div key={index} className="my-5">
-          <h2
-            className="text-sm font-bold"
-            style={{ color: resumeInfo?.themeColor }}
-          >
-            {experience?.title}
+          <h2 className="text-sm font-bold" style={{ color: resumeInfo?.themeColor }}>
+            {exp?.title}
           </h2>
           <h2 className="text-xs flex justify-between">
-            {experience?.companyName}, {experience?.city}, {experience?.state}
+            {exp?.company}, {exp?.location} , {exp?.state} , 
             <span>
-              {experience?.startDate} To{" "}
-              {experience?.currentlyWorking ? "Present" : experience.endDate}
+              {exp?.startDate} – {exp?.currentlyWorking ? "Present" : exp?.endDate}
             </span>
           </h2>
-          <ul className="text-xs my-2 font-bold list-disc pl-4">
-            {experience?.workSummery.split("\n").map((line, index) => {
-              // Remove any leading bullet points to prevent duplication
-              const cleanedLine = line.replace(/^•\s*/, "").trim();
-              return <li key={index}>{cleanedLine}</li>;
-            })}
-          </ul>
+
+          {exp?.responsibilities?.length > 0 && (
+            <ul className="text-xs my-2 font-bold list-disc pl-4">
+              {exp.responsibilities.map((task, idx) => (
+                <li key={idx}>{task}</li>
+              ))}
+            </ul>
+          )}
         </div>
       ))}
     </div>

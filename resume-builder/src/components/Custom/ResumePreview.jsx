@@ -1,4 +1,4 @@
-import React, { useContext , useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ResumeInfoContext } from "../../context/ResumeInfoContext";
 import PersonalPreviewDetails from "../../ResumePreview/PersonalPreviewDetails";
 import SummaryPreview from "../../ResumePreview/SummaryPreview";
@@ -9,14 +9,24 @@ import { useParams } from "react-router-dom";
 
 function ResumePreview() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const {resumeId} = useParams();
+  const { resumeId } = useParams();
 
-  
-  // Save resume data to localStorage whenever resumeInfo updates
+  // 🔹 Load resume data from sessionStorage when component mounts
+  useEffect(() => {
+    if (resumeId) {
+      const savedResume = sessionStorage.getItem(resumeId);
+      if (savedResume) {
+        setResumeInfo(JSON.parse(savedResume));
+        console.log("Loaded from sessionStorage:", JSON.parse(savedResume)); // Debugging
+      }
+    }
+  }, [resumeId, setResumeInfo]);
+
+  // 🔹 Save resume data to sessionStorage whenever resumeInfo updates
   useEffect(() => {
     if (resumeId && resumeInfo) {
       sessionStorage.setItem(resumeId, JSON.stringify(resumeInfo));
-      console.log("Saved to localStorage:", resumeId, resumeInfo); // Debugging
+      console.log("Saved to sessionStorage:", resumeId, resumeInfo); // Debugging
     }
   }, [resumeId, resumeInfo]);
 
@@ -33,11 +43,7 @@ function ResumePreview() {
         <EducationPreview resumeInfo={resumeInfo} />
       )}
 
-      {resumeInfo?.skills?.length > 0 && (
-        <SkillsPreview resumeInfo={resumeInfo}/>
-      )}
-
-
+      {resumeInfo?.skills?.length > 0 && <SkillsPreview resumeInfo={resumeInfo} />}
     </div>
   );
 }

@@ -30,18 +30,18 @@ const Toast = () => {
 
 function Summary({ enableNext }) {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const [summery, setSummery] = useState();
+  const [summary, setSummary] = useState();
 
   const [aiGeneratedSummeryList, setAiGeneratedSummeryList] = useState();
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    summery &&
+    summary &&
       setResumeInfo({
         ...resumeInfo,
-        summery: summery,
+        summary: summary,
       });
-  }, [summery]);
+  }, [summary]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowToast(false), 3000);
@@ -104,9 +104,9 @@ function Summary({ enableNext }) {
           <textarea
             className="w-full mt-5 resize-none overflow-hidden min-h-[50px] p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
-            value={resumeInfo.summery}
+            value={resumeInfo.summary}
             onChange={(e) => {
-              setSummery(e.target.value);
+              setSummary(e.target.value);
               e.target.style.height = "auto"; // Reset height first
               e.target.style.height = `${e.target.scrollHeight}px`; // Adjust to content
             }}
@@ -125,7 +125,7 @@ function Summary({ enableNext }) {
           {aiGeneratedSummeryList?.map((item, index) => (
             <div
               key={index}
-              onClick={() => setSummery(item?.summary)}
+              onClick={() => setSummary(item?.summary)}
               className="p-5 shadow-lg my-4 rounded-lg cursor-pointer"
             >
               <h2 className="font-bold my-1 text-primary">

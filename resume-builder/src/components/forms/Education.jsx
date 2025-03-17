@@ -16,7 +16,6 @@ function Education() {
     {
       universityName:'',
       degree:'',
-      major:'',
       startDate:'',
       endDate:'',
       description:''
@@ -41,7 +40,6 @@ function Education() {
       {
         universityName:'',
         degree:'',
-        major:'',
         startDate:'',
         endDate:'',
         description:''
@@ -94,7 +92,7 @@ function Education() {
               <label>University Name :- </label>
               <input name="universityName" 
               onChange={(e)=>handleChange(e,index)}
-              defaultValue={item?.universityName}
+              defaultValue={item?.university}
               />
             </div>
             <div>
@@ -102,12 +100,6 @@ function Education() {
               <input name="degree" 
               onChange={(e)=>handleChange(e,index)}
               defaultValue={item?.degree} />
-            </div>
-            <div>
-              <label>Major :-</label>
-              <input name="major" 
-              onChange={(e)=>handleChange(e,index)}
-              defaultValue={item?.major} />
             </div>
             <div>
               <label>Start Date :-</label>
@@ -126,7 +118,7 @@ function Education() {
               <textarea
                     className="w-full mt-2 p-2 border rounded resize-none min-h-[80px] focus:ring-2 focus:ring-blue-500"
                     name="workSummery"
-                    value={item?.description || ""}
+                    value={item?.description|| ""}
                     onChange={(event) => handleDescriptionChange(index, event)}
                   />
              </div>
