@@ -3,6 +3,8 @@ import { ResumeInfoContext } from "../../context/ResumeInfoContext";
 import { Brain } from "lucide-react";
 import { AIChatSession } from "../../service/AiModel";
 
+
+
 const Toast = () => (
   <div className="fixed bottom-5 right-5 bg-black text-white p-4 rounded-lg shadow-lg">
     Details Updated
@@ -18,15 +20,14 @@ function Experience() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [experienceList, setExperienceList] = useState(resumeInfo.experience || []);
   const [showToast, setShowToast] = useState(false);
+  const [loadingAI, setLoadingAI] = useState(false);
 
-  // ✅ Ensure experienceList updates when resumeInfo.experience changes
   useEffect(() => {
     if (resumeInfo?.experience) {
       setExperienceList(resumeInfo.experience);
     }
   }, [resumeInfo.experience]);
 
-  // ✅ Sync experienceList with resumeInfo on update
   useEffect(() => {
     if (experienceList !== resumeInfo.experience) {
       setResumeInfo((prev) => ({
@@ -36,7 +37,6 @@ function Experience() {
     }
   }, [experienceList, resumeInfo, setResumeInfo]);
 
-  // ✅ Handle input field changes
   const handleChange = (index, event) => {
     const { name, value } = event.target;
     setExperienceList((prev) => {
@@ -46,7 +46,6 @@ function Experience() {
     });
   };
 
-  // ✅ Handle AI-generated summary update
   const GenerateSummeryFromAI = async (index) => {
     if (!experienceList[index]?.title) {
       return;
@@ -55,71 +54,74 @@ function Experience() {
     const prompt = PROMPT.replace("{positionTitle}", experienceList[index].title);
 
     try {
+      setLoadingAI(true); // Show loading state
+
       const result = await AIChatSession.sendMessage(prompt);
       let resp = await result.response.text();
 
-      // ✅ Remove HTML tags using regex
       const plainText = resp.replace(/<[^>]*>/g, "").trim();
 
-      // ✅ Update responsibilities in state
+      const formattedResponsibilities = plainText
+        .split("\n")
+        .map((line) => line.replace(/^•?\s*/, "").trim())
+        .filter((line) => line.length > 0);
+
       setExperienceList((prevExperience) => {
         const updatedExperience = [...prevExperience];
         updatedExperience[index] = {
           ...updatedExperience[index],
-          responsibilities: plainText,
+          responsibilities: formattedResponsibilities,
         };
+
+        setResumeInfo((prev) => ({
+          ...prev,
+          experience: updatedExperience,
+        }));
+
         return updatedExperience;
       });
-
-      // ✅ Ensure resumeInfo updates immediately
-      setResumeInfo((prev) => ({
-        ...prev,
-        experience: [...experienceList],
-      }));
     } catch (error) {
       console.error("Error generating summary:", error);
+    } finally {
+      setLoadingAI(false); // Remove loading state
     }
   };
 
-  // ✅ Handle responsibilities formatting (adding bullets)
-  const handleWorkSummaryChange = (index, event) => {
-    let newText = event.target.value;
+  const handleResponsibilitiesChange = (index, event) => {
+    const inputText = event.target.value;
 
-    // Remove extra bullets and add bullets properly
-    const formattedText = newText
+    const updatedResponsibilities = inputText
       .split("\n")
-      .map((line) => {
-        let trimmedLine = line.trim();
-        if (!trimmedLine) return ""; // Keep empty lines
-        return trimmedLine.startsWith("•") ? trimmedLine : `• ${trimmedLine}`;
-      })
-      .join("\n");
+      .map((line) => line.replace(/^•?\s*/, "").trim())
+      .filter((line) => line.length > 0);
 
-    setExperienceList((prevExperience) => {
-      const updatedExperience = [...prevExperience];
+    setExperienceList((prev) => {
+      const updatedExperience = [...prev];
       updatedExperience[index] = {
         ...updatedExperience[index],
-        responsibilities: formattedText,
+        responsibilities: updatedResponsibilities,
       };
       return updatedExperience;
     });
   };
 
+ 
   // ✅ Add new experience entry
   const AddNewExperience = () => {
     setExperienceList([
       ...experienceList,
       {
         title: "",
-        companyName: "",
+        company: "",
         location: "",
         state: "",
         startDate: "",
         endDate: "",
-        responsibilities: "",
+        responsibilities: [], // 👈 FIX: Ensure responsibilities is an array
       },
     ]);
   };
+  
 
   // ✅ Remove last experience entry
   const RemoveExperience = () => {
@@ -157,8 +159,8 @@ function Experience() {
                 <div>
                   <label className="text-xs">Company Name: </label>
                   <input
-                    name="companyName"
-                    value={item?.companyName || ""}
+                    name="company"
+                    value={item?.company || ""}
                     onChange={(event) => handleChange(index, event)}
                     className="border p-2 w-full"
                   />
@@ -208,8 +210,8 @@ function Experience() {
                   </button>
                   <textarea
                     className="w-full mt-2 p-2 border rounded resize-none min-h-[80px] focus:ring-2 focus:ring-blue-500"
-                    value={item.responsibilities || ""}
-                    onChange={(event) => handleWorkSummaryChange(index, event)}
+                    value={formatResponsibilities(item.responsibilities || [])} 
+                    onChange={(event) => handleResponsibilitiesChange(index, event)}
                   />
                 </div>
               </div>
