@@ -1,12 +1,47 @@
-# React + Vite
+# AI Resume Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Project Overview
+AI Resume Builder is a powerful React-based application designed to help users create professional resumes effortlessly. It features authentication, customizable templates, AI-generated summaries, and options to download or share resumes.
 
-Currently, two official plugins are available:
+## 🔥 Features
+- **Clerk Authentication**: Secure login and user management.
+- **In-Built Templates**: Professionally designed resume templates.
+- **Customization**: Modify sections, fonts, colors, and layouts.
+- **Google Gemini AI Integration**: Auto-generate professional summaries.
+- **Download & Share**: Export resumes as PDFs and share online.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Frontend**: React, JavaScript, Tailwind CSS
+- **Authentication**: Clerk
+- **AI Integration**: Google Gemini AI
+- **State Management**: React Context API / Redux
 
-## Expanding the ESLint configuration
+## 📦 Installation & Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/jharavi26/AI-Resume-Builder.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd resume
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📸 Screenshots
+*(Add screenshots of your application here)*
+
+## 🎯 How It Works
+1. **User Authentication**: Secure login using Clerk.
+2. **Resume Creation**: Choose a template and customize details.
+3. **AI-Powered Summary**: Generate professional summaries using Google Gemini AI.
+4. **Download & Share**: Export resumes as PDFs and share via links.
+
+
+
